@@ -1,57 +1,35 @@
 from django.db import models
 
 
-class TopStudentManager(models.Manager):
+class ActiveStudentManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(marks__gte=80)
+        return super().get_queryset().filter(is_active=True)
 
 
 class Department(models.Model):
+    department = models.CharField(max_length=200)
+
+
+class Course(models.Model):
     name = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.name
+
 
 
 class Student(models.Model):
     name = models.CharField(max_length=100)
-    marks = models.IntegerField()
+    is_active = models.BooleanField(default=True)
+    marks = models.IntegerField(default=0)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    course = models.ManyToManyField(Course)
 
-    class Meta:
-        ordering = ["-marks"]
-
-    def __str__(self):
-        return f"{self.name} - {self.marks}"
-
-
-class TopStudent(Student):
-    objects = TopStudentManager()
-
-    class Meta:
-        proxy = True
-        ordering = ["marks"]
-
-
-class AuditModel(models.Model):
-    created_at = models.DateField(auto_now_add=True)
-    updated_at = models.DateField(auto_now=True)
-    is_activate = models.BooleanField(default=True)
-
-    class Meta:
-        abstract = True
-
-
-class Product(AuditModel):
-    name = models.CharField(max_length=100, default="Unnamed")
-    price = models.IntegerField(default=0)
-
-    class Meta:
-        db_table = "store_product"
+    active = ActiveStudentManager()
+    objects = models.Manager()
 
     def __str__(self):
-        return f"{self.name} - {self.price}"
+        return f"{self.name}"
 
 
-class Category(AuditModel):
-    pass
+class Profile(models.Model):
+    name = models.OneToOneField(Student, on_delete=models.CASCADE)
+    age = models.IntegerField()
