@@ -14,8 +14,6 @@ class Course(models.Model):
     name = models.CharField(max_length=100)
 
 
-
-
 class Student(models.Model):
     name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
@@ -33,3 +31,15 @@ class Student(models.Model):
 class Profile(models.Model):
     name = models.OneToOneField(Student, on_delete=models.CASCADE)
     age = models.IntegerField()
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+
+
+class Child(Person):
+    student_id = models.CharField(max_length=20)
+
+
+class Teacher(Person):
+    salary = models.DecimalField(max_digits=10, decimal_places=2)

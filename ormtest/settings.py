@@ -77,7 +77,7 @@ WSGI_APPLICATION = "ormtest.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "ormdb",
+        "NAME": "orm_practice",
         "USER": "murshid",
         "PASSWORD": "12345",
         "HOST": "localhost",
