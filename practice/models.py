@@ -27,6 +27,9 @@ class Student(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    class Meta:
+        db_table = "student_table"
+
 
 class Profile(models.Model):
     name = models.OneToOneField(Student, on_delete=models.CASCADE)
@@ -43,3 +46,6 @@ class Child(Person):
 
 class Teacher(Person):
     salary = models.DecimalField(max_digits=10, decimal_places=2)
+
+
+

@@ -31,14 +31,14 @@ class TimeStampedModel(models.Model):
 class Author(TimeStampedModel):
     name = models.CharField(max_length=100)
     book_written = models.PositiveIntegerField(default=0, editable=False)
-
+ 
 
 
 class Publisher(TimeStampedModel):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name}" 
 
 
 class PublishedBookManager(models.Manager):
